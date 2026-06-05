@@ -65,31 +65,31 @@ playwright-e2e-framework/
 
 Page Object Model (POM) classes that encapsulate page-specific interactions:
 
-| File | Purpose |
-|------|---------|
-| `BasePage.ts` | Base class providing shared `page` property |
-| `LoginPage.ts` | Login form interactions; returns `MyApisPage` on success |
-| `MyApisPage.ts` | Main dashboard — API import, SDK generation, download, transform, export, delete |
-| `SetupPage.ts` | Onboarding setup cards (theme, docs, recipes, SDKs, Copilot) and navigation |
-| `DocsEditorPage.ts` | Docs editor save/preview and API Playground navigation |
-| `ApiPlaygroundSettingsPage.ts` | API Playground config, AI settings, Context Plugins, API Copilot |
-| `PackagePublishingPage.ts` | SDK package publishing — language selection, version management, publish status |
-| `AccountSettingsPage.ts` | User profile updates and sign-out |
-| `PricingPlansPage.ts` | Pricing tier selection |
+| File                           | Purpose                                                                          |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| `BasePage.ts`                  | Base class providing shared `page` property                                      |
+| `LoginPage.ts`                 | Login form interactions; returns `MyApisPage` on success                         |
+| `MyApisPage.ts`                | Main dashboard — API import, SDK generation, download, transform, export, delete |
+| `SetupPage.ts`                 | Onboarding setup cards (theme, docs, recipes, SDKs, Copilot) and navigation      |
+| `DocsEditorPage.ts`            | Docs editor save/preview and API Playground navigation                           |
+| `ApiPlaygroundSettingsPage.ts` | API Playground config, AI settings, Context Plugins, API Copilot                 |
+| `PackagePublishingPage.ts`     | SDK package publishing — language selection, version management, publish status  |
+| `AccountSettingsPage.ts`       | User profile updates and sign-out                                                |
+| `PricingPlansPage.ts`          | Pricing tier selection                                                           |
 
 ### `/tests`
 
-| File | Test Project | Description |
-|------|-------------|-------------|
-| `auth.setup.ts` | `setup` | Authenticates the package-publishing user and saves session state |
-| `onboarding.setup.ts` | `onboarding-setup` | Authenticates the onboarding user and saves session state |
-| `MyApis.test.ts` | `chromium` | 13 tests — API import (sample/file/URL), spec transforms, SDK generation and download |
-| `portalEditor.test.ts` | `chromium` | Portal editor workflows and API Playground settings |
-| `package-publishing.test.ts` | `package-publishing` | SDK package publishing validation per language |
-| `deleteEntities.test.ts` | `cleanup` | Deletes API entities listed in `fixtures/entities.txt` after test runs |
-| `post-onboarding.test.ts` | `onboarding` | Post-onboarding flow validation |
-| `onboarding-visual-test.ts` | `onboarding-visual` | Visual regression for onboarding screens (1920×1080) |
-| `dx-visual-regression.test.ts` | `dx-portal-visual-regression` | Visual regression against locally served DX portals |
+| File                           | Test Project                  | Description                                                                           |
+| ------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------- |
+| `auth.setup.ts`                | `setup`                       | Authenticates the package-publishing user and saves session state                     |
+| `onboarding.setup.ts`          | `onboarding-setup`            | Authenticates the onboarding user and saves session state                             |
+| `MyApis.test.ts`               | `chromium`                    | 13 tests — API import (sample/file/URL), spec transforms, SDK generation and download |
+| `portalEditor.test.ts`         | `chromium`                    | Portal editor workflows and API Playground settings                                   |
+| `package-publishing.test.ts`   | `package-publishing`          | SDK package publishing validation per language                                        |
+| `deleteEntities.test.ts`       | `cleanup`                     | Deletes API entities listed in `fixtures/entities.txt` after test runs                |
+| `post-onboarding.test.ts`      | `onboarding`                  | Post-onboarding flow validation                                                       |
+| `onboarding-visual-test.ts`    | `onboarding-visual`           | Visual regression for onboarding screens (1920×1080)                                  |
+| `dx-visual-regression.test.ts` | `dx-portal-visual-regression` | Visual regression against locally served DX portals                                   |
 
 ### `/utils`
 
@@ -122,15 +122,15 @@ npx playwright install
 Create a `.env` file in the project root (it is gitignored):
 
 ```env
-baseUrl=https://app.apimatic.io/dashboard
-API_BASE_URL=https://api.apimatic.io
+baseUrl=
+API_BASE_URL=
 APIMATIC_API_KEY=your_api_key_here
 
 # Used by auth.setup.ts and package-publishing tests
 PACKAGE_PUBLISHING_EMAIL=your_email@example.com
 PACKAGE_PUBLISHING_PASSWORD=your_password
 PUBLISH_LANGUAGE=python
-PACKAGE_PUBLISHING_BASEURL=https://dash.apimatic.io/publish/<id>/publish-now
+PACKAGE_PUBLISHING_BASEURL=
 
 # Used by onboarding.setup.ts and onboarding tests
 ONBOARDING_EMAIL=your_onboarding_email@example.com
@@ -162,16 +162,16 @@ npx playwright show-report
 
 The `playwright.config.ts` defines the following projects:
 
-| Project | Matches | Depends On | Description |
-|---------|---------|-----------|-------------|
-| `setup` | `auth.setup.ts` | — | Saves package-publishing user session |
-| `onboarding-setup` | `onboarding.setup.ts` | — | Saves onboarding user session |
-| `chromium` | All tests except visual/standalone | `setup` | Main test suite (Desktop Chrome) |
-| `cleanup` | `deleteEntities.test.ts` | — | Deletes test entities after runs |
-| `package-publishing` | `package-publishing.test.ts` | `setup` | SDK package publishing per language |
-| `onboarding` | `post-onboarding.test.ts` | `onboarding-setup` | Post-onboarding flows |
-| `onboarding-visual` | `onboarding-visual-test.ts` | `onboarding-setup` | Visual regression at 1920×1080 |
-| `dx-portal-visual-regression` | `dx-visual-regression.test.ts` | — | Visual regression against local portal (port 4546) |
+| Project                       | Matches                            | Depends On         | Description                                        |
+| ----------------------------- | ---------------------------------- | ------------------ | -------------------------------------------------- |
+| `setup`                       | `auth.setup.ts`                    | —                  | Saves package-publishing user session              |
+| `onboarding-setup`            | `onboarding.setup.ts`              | —                  | Saves onboarding user session                      |
+| `chromium`                    | All tests except visual/standalone | `setup`            | Main test suite (Desktop Chrome)                   |
+| `cleanup`                     | `deleteEntities.test.ts`           | —                  | Deletes test entities after runs                   |
+| `package-publishing`          | `package-publishing.test.ts`       | `setup`            | SDK package publishing per language                |
+| `onboarding`                  | `post-onboarding.test.ts`          | `onboarding-setup` | Post-onboarding flows                              |
+| `onboarding-visual`           | `onboarding-visual-test.ts`        | `onboarding-setup` | Visual regression at 1920×1080                     |
+| `dx-portal-visual-regression` | `dx-visual-regression.test.ts`     | —                  | Visual regression against local portal (port 4546) |
 
 ## Configuration
 
@@ -209,14 +209,14 @@ npx playwright test --project=dx-portal-visual-regression --update-snapshots
 
 All workflows are in `.github/workflows/` and run on GitHub Actions.
 
-| Workflow | Trigger | Runner | Project Run |
-|----------|---------|--------|------------|
-| `dashboard.yml` | Manual (env: dev/prod) | Ubuntu | `chromium` |
-| `portalEditor.yml` | Manual (env: dev/prod) | Ubuntu | `chromium` (portalEditor only) |
-| `package-publishing.yml` | Cron (Mon 5am) or manual | Ubuntu | `package-publishing` (matrix per language) |
-| `onboarding-visual.yml` | Manual (env: dev/prod) | Ubuntu | `onboarding-visual` |
-| `post-onboarding.yml` | Manual (env: dev/prod) | Ubuntu | `onboarding` |
-| `dx-visual.yml` | Manual | Windows | `dx-portal-visual-regression` |
+| Workflow                 | Trigger                  | Runner  | Project Run                                |
+| ------------------------ | ------------------------ | ------- | ------------------------------------------ |
+| `dashboard.yml`          | Manual (env: dev/prod)   | Ubuntu  | `chromium`                                 |
+| `portalEditor.yml`       | Manual (env: dev/prod)   | Ubuntu  | `chromium` (portalEditor only)             |
+| `package-publishing.yml` | Cron (Mon 5am) or manual | Ubuntu  | `package-publishing` (matrix per language) |
+| `onboarding-visual.yml`  | Manual (env: dev/prod)   | Ubuntu  | `onboarding-visual`                        |
+| `post-onboarding.yml`    | Manual (env: dev/prod)   | Ubuntu  | `onboarding`                               |
+| `dx-visual.yml`          | Manual                   | Windows | `dx-portal-visual-regression`              |
 
 **`package-publishing.yml`** runs a language matrix (csharp, java, php, python, ruby, typescript) in parallel and auto-commits a version bump to `fixtures/sdk-versions.txt` after a successful publish.
 
