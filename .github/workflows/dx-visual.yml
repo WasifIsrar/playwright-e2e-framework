@@ -1,0 +1,38 @@
+name: Dx-Visual Regression Testing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          path: test-code
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.16.0
+      - name: Install deps in Test Code
+        working-directory: test-code
+        run: npm install
+      - name: Install http-server globally
+        run: npm install -g http-server
+      - name: Serve portal
+        shell: bash
+        working-directory: test-code/dx-test-portals/generated_portal
+        run: http-server -p 4546 -c-1 --cors &
+      - name: Install Playwright Browsers
+        working-directory: test-code
+        run: npx playwright install chromium --with-deps
+      - name: Run Playwright tests
+        working-directory: test-code
+        run: npx playwright test --project=dx-portal-visual-regression
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: test-code/playwright-report/
+          retention-days: 30
